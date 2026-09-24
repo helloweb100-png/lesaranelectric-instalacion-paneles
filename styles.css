@@ -184,9 +184,13 @@ body.is-ready [data-hero] {
 .rise-word.is-visible .rise-word-inner { transform: none; }
 
 .text-sun {
-  background: linear-gradient(112deg, var(--paper) 8%, var(--amber-light) 46%, var(--amber) 76%, var(--paper) 100%);
-  background-size: 300% 100%;
-  background-position: 220% 0;
+  /* base gradient is always at 0 0, so the headline is visible on first paint;
+     only the shine streak (layer 1) waits off to the right for .is-lit to sweep it through */
+  background-image:
+    linear-gradient(112deg, transparent 32%, rgba(255, 255, 255, 0.85) 47%, transparent 62%),
+    linear-gradient(112deg, var(--paper) 8%, var(--amber-light) 46%, var(--amber) 76%, var(--paper) 100%);
+  background-size: 260% 100%, 100% 100%;
+  background-position: 220% 0, 0 0;
   background-repeat: no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
@@ -195,7 +199,7 @@ body.is-ready [data-hero] {
 
 .text-sun.is-lit { animation: sunSweep 1.3s var(--ease-out) forwards; }
 
-@keyframes sunSweep { to { background-position: -60% 0; } }
+@keyframes sunSweep { to { background-position: -60% 0, 0 0; } }
 
 .eyebrow {
   display: inline-flex;
@@ -1328,5 +1332,5 @@ main section[id] { scroll-margin-top: 76px; }
 
   .hero-title .line-inner, .rise-word-inner { transform: none !important; }
   .eyebrow::before { transform: scaleX(1) !important; }
-  .text-sun.is-lit { animation: none !important; background-position: 0 0 !important; }
+  .text-sun.is-lit { animation: none !important; background-position: -60% 0, 0 0 !important; }
 }
